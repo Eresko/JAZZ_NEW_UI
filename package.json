@@ -1,0 +1,26 @@
+{
+  "name": "jazzcinema",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@pinia/nuxt": "^0.11.3",
+    "maska": "^3.2.0",
+    "nuxt": "^4.2.1",
+    "pinia": "^3.0.4",
+    "swiper": "^12.1.1",
+    "vue": "^3.5.24",
+    "vue-router": "^4.6.3",
+    "vue-slick-carousel": "^1.0.6"
+  },
+  "devDependencies": {
+    "sass": "^1.97.3"
+  }
+}
