@@ -53,6 +53,10 @@ const props = defineProps({
     }
 );
 const salesAllowed = computed(() => {
+  let film = currentScheduleStore.GET_FETCH_CURRENT_SCHEDULE
+  if (film.isPublicSellable) {
+    return true
+  }
   return privelegePerformanceStore.privelege_performance?.salesAllowed ?? false
 })
 
@@ -121,11 +125,27 @@ watchEffect( async () => {
   }
 });
 const pay = async () => {
-  if (!auth.value) {
+  let film = currentScheduleStore.GET_FETCH_CURRENT_SCHEDULE
+  if ((!auth.value) && (film.isPublicSellable)) {
+    console.log("UP",film);
+    await reservationStore.SET_RESERVATION_PARAMS_STORAGE(
+        parseInt(film.performanceId),
+        film.name,
+        film.dateTime,
+        film.time,
+        film.price,
+        film.zal,
+        film.zalId
+    )
+    modalStore.TOGGLE_PAID_PUBLISHED_MODAL()
+    await emit('getStatusPerformance')
+    return
+  }
+  else if (!auth.value) {
     modalStore.TOGGLE_FAST_REG_MODAL()
     return
   }
-  let film = currentScheduleStore.GET_FETCH_CURRENT_SCHEDULE
+
   await reservationStore.SET_RESERVATION_PARAMS_STORAGE(
       parseInt(film.performanceId),
       film.name,

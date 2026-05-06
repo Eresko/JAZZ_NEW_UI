@@ -18,6 +18,7 @@ interface ModalState {
     qrModal: boolean;
     preloader: boolean;
     mobileMenu: boolean;
+    paidPublishedModal:boolean;
 }
 
 export const useModalStore = defineStore('Modal', {
@@ -38,7 +39,8 @@ export const useModalStore = defineStore('Modal', {
         paymentWithBonus: false,
         qrModal: false,
         preloader: false,
-        mobileMenu: false
+        mobileMenu: false,
+        paidPublishedModal: false
     }),
 
     getters: {
@@ -59,6 +61,7 @@ export const useModalStore = defineStore('Modal', {
         GET_QR_MODAL: (state): boolean => state.qrModal,
         GET_PRELOADER_MODAL: (state): boolean => state.preloader,
         GET_MOBILE_MENU: (state): boolean => state.mobileMenu,
+        GET_PAID_PUBLISHED_MODAL: (state): boolean => state.paidPublishedModal,
     },
 
     actions: {
@@ -129,6 +132,9 @@ export const useModalStore = defineStore('Modal', {
         TOGGLE_MOBILE_MENU() {
             this.mobileMenu = !this.mobileMenu;
         },
+        TOGGLE_PAID_PUBLISHED_MODAL() {
+            this.paidPublishedModal = !this.paidPublishedModal;
+        },
 
         SET_AUTH_MODAL(value: boolean) {
             this.authModal = value;
@@ -195,6 +201,10 @@ export const useModalStore = defineStore('Modal', {
 
         SET_MOBILE_MENU(value: boolean) {
             this.mobileMenu = value;
+        },
+
+        SET_PAID_PUBLISHED_MODAL(value: boolean) {
+            this.paidPublishedModal = value;
         },
 
     },

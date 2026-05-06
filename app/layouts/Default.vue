@@ -18,6 +18,7 @@ const modalStore = useModalStore();
     <ModalsCheckCode  v-if="modalStore.checkCode" />
     <ModalsAuthorizationSuccess  v-if="modalStore.authSuccess" />
     <ModalsPay  v-if="modalStore.paidModal" />
+    <ModalsPublishedPay  v-if="modalStore.paidPublishedModal" />
     <ModalsPayCompleted  v-if="modalStore.modalsPayCompleted" />
     <ModalsPaidNotSuccess  v-if="modalStore.paidNotSuccess" />
     <ModalsPaymentWithBonus  v-if="modalStore.paymentWithBonus" />

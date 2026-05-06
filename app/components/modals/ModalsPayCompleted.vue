@@ -36,14 +36,23 @@ watchEffect(() => {
     })
   }
 })
-
-
+const auth = computed(() => {
+  return autorizationStore.token != null
+})
+const qr = computed(() => {
+  return paidStore?.qr
+})
 const toggleModal = () => {
   optionsStore.SET_TICKETS(true)
   modalStore.TOGGLE_PAY_COMPLETED_MODAL()
   let query = {
     "currentPageReservation" : 1,
     "search": ''
+  }
+  console.log("AUTH",auth)
+  if (!auth.value) {
+    setTimeout(router.push,300,`/`);
+    return
   }
   ticketStore.FETCH_TICKETS(query)
   setTimeout(router.push,300,`/personalarea`);
@@ -71,6 +80,10 @@ const toggleModal = () => {
         <span>Стоимость:</span>
         <span>{{ amount }}	&#8381;</span>
       </div>
+      <div v-if="qr" class="qr">
+        <img  :src="qr">
+        <span>сделайте скриншот</span>
+      </div>
     </div>
   </modalsBaseModal>
 </template>
@@ -81,6 +94,12 @@ const toggleModal = () => {
 
 
 <style lang="scss" scoped>
+.qr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .modals {
   &__footer {
 
