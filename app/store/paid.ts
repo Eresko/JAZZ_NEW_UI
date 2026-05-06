@@ -9,11 +9,13 @@ import { useOperationStore } from '@/store/operation'
 
 interface PaidState {
     paid: string[];
+    qr:string
 }
 
 export const usePaidStore = defineStore('Paid', {
     state: (): PaidState => ({
         paid: [],
+        qr: ""
     }),
     getters: {
         GET_PAID: (state): PaidState => state.paid,
@@ -77,6 +79,7 @@ export const usePaidStore = defineStore('Paid', {
                    let testSeat = operationStore.CREATE_TEXT_SEATS(data.seats,data.nameHall)
                     reservationStore.textSeats = testSeat;
                     reservationStore.amount = data.amount;
+                    this.qr = data?.qr
                     modalStore.TOGGLE_PRELOADER_MODAL()
                     modalStore.SET_PAY_COMPLETED_MODAL(true)
                 }
@@ -117,6 +120,42 @@ export const usePaidStore = defineStore('Paid', {
             } catch (e) {
                 console.log("sheduleERR", e);
             }
+        },
+        async SET_PUBLISHED_PAID_NOT_SELECT(val) {
+            const modalStore = useModalStore()
+            modalStore.TOGGLE_PRELOADER_MODAL()
+            try {
+
+                this.status = false;
+                const config = useRuntimeConfig();
+                const API_URL = config.public.apiBase;
+                const authStore = useAutorizationStore()
+                const modalStore = useModalStore()
+                const selectedSeatStore = useSelectedSeatStore()
+                const { data } = await axios.post(
+                    `${API_URL}booking/published-payment-registration`,
+                    val,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${authStore.GET_FETCH_TOKEN}`
+                        }
+                    }
+                )
+                console.log(data)
+                if (data?.status) {
+                    window.location.href = data.url;
+
+                } else {
+                    modalStore.SET_PAID_MODAL(false)
+                    modalStore.SET_PAID_NOT_SUCESS_MODAL(true)
+                    selectedSeatStore.RESET_BY_PERFORMANCE_ID(val.idPerformance)
+                }
+                this.status = true;
+            } catch (e) {
+                console.log("sheduleERR", e);
+            }
+
+            modalStore.TOGGLE_PRELOADER_MODAL()
         },
     },
 });
