@@ -5,11 +5,11 @@ module.exports = {
             script: './.output/server/index.mjs',
             args: '', // Можно передать аргументы, если нужно
             env: {
-                PORT: 8067,
+                PORT: 7777,
                 NODE_ENV: 'development'
             },
             env_production: {
-                PORT: 8067,
+                PORT: 7777,
                 NODE_ENV: 'production'
             },
             watch: false // В продакшене лучше false, перезагружайте вручную после билда

@@ -37,7 +37,9 @@ export const useCurrentFilmsStore = defineStore<'currentFilms', CurrentFilmsStat
 
             try {
                 // Выполним запрос через axios
-                const response = await axios.get(`https://api-jazzcinema.zedform.ru/api/film-copy/${dynamicUrl}/`);
+                const config = useRuntimeConfig();
+                const API_URL = config.public.apiBase; // получаем публичный API URL
+                const response = await axios.get(`${API_URL}film-copy/${dynamicUrl}/`);
                 console.log(response);
                 // Убедитесь, что в ответе приходят данные фильмов
                 if (response && response.data) {

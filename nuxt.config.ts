@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     devServer: {
-        host: '192.168.22.245',
+        host: '37.143.13.228',
         port: 8067,
         hmr: {
             protocol: 'wss',
@@ -23,8 +23,8 @@ export default defineNuxtConfig({
         https: true,
         hmr: {
             protocol: 'wss',
-            host: 'jazz-nuxt3.zedform.ru',
-            port: 5173,
+            host: 'localhost',
+            port: 7777,
         },
     },
     head: {
@@ -46,7 +46,7 @@ export default defineNuxtConfig({
 
         // публичные переменные (доступны в браузере через useRuntimeConfig().public)
         public: {
-            apiBase: process.env.NUXT_PUBLIC_API_URL || 'https://api-jazzcinema.zedform.ru/api/',
+            apiBase: process.env.NUXT_PUBLIC_API_URL || 'https://api.jazzcinema.zedform.kz/api/',
         },
     },
     css: ["@/assets/styles/main.scss"],
