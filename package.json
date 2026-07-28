@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@openreplay/tracker": "^18.1.0",
     "@pinia/nuxt": "^0.11.3",
     "maska": "^3.2.0",
     "nuxt": "^4.2.1",
