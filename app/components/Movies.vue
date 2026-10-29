@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref,onMounted } from 'vue'
+import { ref,onMounted, computed } from 'vue'
 import { useCurrentFilmsStore } from '@/store/useCurrentFilmsStore'
 
-const filmList = ref()
 const carouselTab = ref<number>(1);
 
 // Создаем стор
@@ -12,13 +11,18 @@ const currentFilmsStore = useCurrentFilmsStore();
 const toggleCarouselTab = async (val: number) => {
   carouselTab.value = val;
   await currentFilmsStore.FETCH_CURRENT_FILMS(val);
-  filmList.value = currentFilmsStore.GET_CURRENT_FILMS
 }
 
 onMounted( async () => {
   await currentFilmsStore.FETCH_CURRENT_FILMS(1);
-  filmList.value = currentFilmsStore.GET_CURRENT_FILMS
+
 });
+const filmList =  computed(() => {
+  return currentFilmsStore.GET_CURRENT_FILMS
+})
+const countActiveTypes = computed(() => {
+  return currentFilmsStore.count_active_types
+})
 </script>
 
 
@@ -42,25 +46,31 @@ onMounted( async () => {
           >Скоро</span>
         </li>
 
-        <li class="movies__list-item" @click.prevent="toggleCarouselTab(3)">
+        <li class="movies__list-item" @click.prevent="toggleCarouselTab(3)" v-if="countActiveTypes?.ps > 0">
           <span
               class="movies__list-link"
               :class="{ active: carouselTab == 3 }"
           >Киноклуб PS</span>
         </li>
 
-        <li class="movies__list-item" @click.prevent="toggleCarouselTab(4)">
+        <li class="movies__list-item" @click.prevent="toggleCarouselTab(4)" v-if="countActiveTypes?.retro > 0">
           <span
               class="movies__list-link"
               :class="{ active: carouselTab == 4 }"
           >Ретроспектива</span>
         </li>
 
-        <li class="movies__list-item" @click.prevent="toggleCarouselTab(5)">
+        <li class="movies__list-item" @click.prevent="toggleCarouselTab(5)" v-if="countActiveTypes?.not_only_jazz > 0">
           <span
               class="movies__list-link"
               :class="{ active: carouselTab == 5 }"
           >Не только JAZZ</span>
+        </li>
+        <li class="movies__list-item" @click.prevent="toggleCarouselTab(6)"  v-if="countActiveTypes?.is_filmosofiya > 0">
+          <span
+              class="movies__list-link"
+              :class="{ active: carouselTab == 6 }"
+          >Фильмософия</span>
         </li>
       </ul>
 

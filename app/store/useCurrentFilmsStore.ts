@@ -14,6 +14,7 @@ interface CurrentFilmsState {
 export const useCurrentFilmsStore = defineStore<'currentFilms', CurrentFilmsState>('currentFilms', {
     state: (): CurrentFilmsState => ({
         films: [],
+        count_active_types: [],
     }),
     getters: {
         GET_CURRENT_FILMS: (state): Film[] => state.films,
@@ -25,7 +26,9 @@ export const useCurrentFilmsStore = defineStore<'currentFilms', CurrentFilmsStat
             let dynamicUrl = 'current';
 
             const numVal = parseInt(val);
-            if (numVal === 5) {
+            if (numVal === 6) {
+                dynamicUrl = 'filmsofiya';
+            } else if (numVal === 5) {
                 dynamicUrl = 'not-only-jazz';
             } else if (numVal === 4) {
                 dynamicUrl = 'retro';
@@ -44,7 +47,8 @@ export const useCurrentFilmsStore = defineStore<'currentFilms', CurrentFilmsStat
                 // Убедитесь, что в ответе приходят данные фильмов
                 if (response && response.data) {
                     console.log(response.data);
-                    this.films = response.data;  // Присваиваем данные фильмов
+                    this.films = response.data.film_copies;  // Присваиваем данные фильмов
+                    this.count_active_types = response.data.count_active_types
                 } else {
                     console.log("No data found");
                 }

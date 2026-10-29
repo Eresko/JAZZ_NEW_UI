@@ -26,6 +26,7 @@ export const useCurrentFilmStore = defineStore<'CurrentFilm', BannerState>('Curr
         currentFilms: [],
         currentFilm: null,
         currentFilmSchedule: [],
+        countActiveTypes: [],
     }),
 
     getters: {
@@ -39,6 +40,7 @@ export const useCurrentFilmStore = defineStore<'CurrentFilm', BannerState>('Curr
             let dynamicUrl = 'current';
 
             switch (parseInt(val)) {
+                case 6: dynamicUrl = 'filmsofiya'; break;
                 case 5: dynamicUrl = 'not-only-jazz'; break;
                 case 4: dynamicUrl = 'retro'; break;
                 case 3: dynamicUrl = 'ps'; break;
@@ -52,7 +54,8 @@ export const useCurrentFilmStore = defineStore<'CurrentFilm', BannerState>('Curr
                 const response = await axios.get(`${API_URL}film-copy/${dynamicUrl}/`);
 
                 if (response && response.data) {
-                    this.SET_CURRENT_FILMS(response.data);  // Присваиваем данные фильмов
+                    this.SET_CURRENT_FILMS(response.data.film_copies);  // Присваиваем данные фильмов
+                    this.count_active_types = response.data.count_active_types
                 } else {
                     console.log("No data found");
                 }
