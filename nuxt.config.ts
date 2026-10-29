@@ -10,11 +10,11 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
 
     devServer: {
-        host: '37.143.13.228',
-        port: 8067,
+        host: '192.168.22.245',
+        port: 8467,
         hmr: {
             protocol: 'wss',
-            port: 8068,
+            port: 8468,
             host: 'jazz-nuxt3.zedform.ru',
         },
     },
