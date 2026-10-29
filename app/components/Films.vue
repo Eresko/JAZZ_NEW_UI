@@ -1,30 +1,34 @@
 <script setup lang="ts">
-import { ref,onMounted } from 'vue'
+import { ref,onMounted, computed } from 'vue'
 import { useScheduleStore  } from '@/store/schedule'
 import { useCurrentFilmsStore } from '@/store/useCurrentFilmsStore'
 import { useRouter } from 'vue-router';
 const currentFilmsStore = useCurrentFilmsStore();
 const scheduleStore  = useScheduleStore();
 const carouselTab = ref(1);
-const filmList = ref();
+
 
 
 const router = useRouter();
 const toggleCoruselTab = async (val:number) => {
   carouselTab.value = val
   await currentFilmsStore.FETCH_CURRENT_FILMS(carouselTab.value);
-  filmList.value = currentFilmsStore.GET_CURRENT_FILMS
+
 }
 
 onMounted( async () => {
   await currentFilmsStore.FETCH_CURRENT_FILMS(carouselTab.value);
-  filmList.value = currentFilmsStore.GET_CURRENT_FILMS
 });
 
 const goToDetails = (id:number) => {
   router.push(`/filmDetails/${id}`);
 }
-
+const filmList =  computed(() => {
+  return currentFilmsStore.GET_CURRENT_FILMS
+})
+const countActiveTypes = computed(() => {
+  return currentFilmsStore.count_active_types
+})
 
 </script>
 
@@ -52,7 +56,7 @@ const goToDetails = (id:number) => {
             >
           </li>
 
-          <li class="header__list-item" @click.prevent="toggleCoruselTab(3)">
+          <li class="header__list-item" @click.prevent="toggleCoruselTab(3)"  v-if="countActiveTypes?.ps > 0">
             <span
                 class="header__list-link"
                 :class="{ active: carouselTab == 3 }"
@@ -60,7 +64,7 @@ const goToDetails = (id:number) => {
             >
           </li>
 
-          <li class="header__list-item" @click.prevent="toggleCoruselTab(4)">
+          <li class="header__list-item" @click.prevent="toggleCoruselTab(4)" v-if="countActiveTypes?.retro > 0">
             <span
                 class="header__list-link"
                 :class="{ active: carouselTab == 4 }"
@@ -68,12 +72,18 @@ const goToDetails = (id:number) => {
             >
           </li>
 
-          <li class="header__list-item" @click.prevent="toggleCoruselTab(5)">
+          <li class="header__list-item" @click.prevent="toggleCoruselTab(5)"  v-if="countActiveTypes?.not_only_jazz > 0">
             <span
                 class="header__list-link"
                 :class="{ active: carouselTab == 5 }"
             >Не только ДЖАЗ</span
             >
+          </li>
+          <li class="movies__list-item" @click.prevent="toggleCoruselTab(6)" v-if="countActiveTypes?.is_filmosofiya > 0">
+          <span
+              class="movies__list-link"
+              :class="{ active: carouselTab == 6 }"
+          >Фильмософия</span>
           </li>
         </ul>
       </div>
