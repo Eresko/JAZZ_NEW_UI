@@ -37,10 +37,10 @@ const scrollToElement = () => {
   <section class="header__left">
     <div class="header__logo">
       <div class="mobile-logo-wrapper" @click="go">
-        <img src="../assets/images/logo.svg" alt="Логотип Jazz Cinema" class="mobile-logo">
+        <img src="../assets/images/jazz_kino_logotype_vertical_center_white.svg" alt="Логотип Jazz Cinema" class="mobile-logo">
         <div class="mobile-logo-backdrop"></div>
       </div>
-      <img src="../assets/images/logo.svg" alt="Логотип Jazz Cinema" class="header__left-logo" @click="go">
+      <img src="../assets/images/jazz_kino_logotype_vertical_center_white.svg" alt="Логотип Jazz Cinema" class="header__left-logo" @click="go">
       <address class="header__left-address">Магнитогорск, Герцена, 6</address>
     </div>
 
@@ -90,6 +90,15 @@ const scrollToElement = () => {
 
 
 <style lang="scss">
+.header {
+  &__left-logo {
+    margin: 6px 0 0 10px;
+    width: 190px;
+    height: 100px;
+    display: block;
+    z-index: 2;
+  }
+}
 .mobile-logo-wrapper {
   display: none;
 }
